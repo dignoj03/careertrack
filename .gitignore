@@ -1,0 +1,8 @@
+backend/venv/
+backend/careertrack.db
+backend/__pycache__/
+backend/routes/__pycache__/
+frontend/node_modules/
+frontend/dist/
+.DS_Store
+.env
