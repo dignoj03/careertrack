@@ -5,16 +5,18 @@ function Interviews() {
   const [interviews, setInterviews] = useState([]);
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [editingInterviewId, setEditingInterviewId] = useState(null);
 
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     application_id: "",
     interview_type: "Technical",
     interview_date: "",
     interview_time: "",
     interview_status: "Scheduled",
     notes: "",
-  });
+  };
 
+  const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState("");
 
   async function fetchData() {
@@ -47,6 +49,25 @@ function Interviews() {
     });
   }
 
+  function startEditing(interview) {
+    setEditingInterviewId(interview.id);
+
+    setFormData({
+      application_id: String(interview.application_id),
+      interview_type: interview.interview_type || "Technical",
+      interview_date: interview.interview_date || "",
+      interview_time: interview.interview_time || "",
+      interview_status: interview.interview_status || "Scheduled",
+      notes: interview.notes || "",
+    });
+  }
+
+  function cancelEditing() {
+    setEditingInterviewId(null);
+    setFormData(initialFormData);
+    setError("");
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
     setError("");
@@ -57,23 +78,22 @@ function Interviews() {
     }
 
     try {
-      await api.post("/interviews/", {
+      const payload = {
         ...formData,
         application_id: Number(formData.application_id),
-      });
+      };
 
-      setFormData({
-        application_id: "",
-        interview_type: "Technical",
-        interview_date: "",
-        interview_time: "",
-        interview_status: "Scheduled",
-        notes: "",
-      });
+      if (editingInterviewId) {
+        await api.put(`/interviews/${editingInterviewId}`, payload);
+      } else {
+        await api.post("/interviews/", payload);
+      }
 
+      setFormData(initialFormData);
+      setEditingInterviewId(null);
       fetchData();
     } catch (error) {
-      console.error("Error creating interview:", error);
+      console.error("Error saving interview:", error);
       setError("Failed to save interview.");
     }
   }
@@ -90,6 +110,10 @@ function Interviews() {
       setInterviews((currentInterviews) =>
         currentInterviews.filter((interview) => interview.id !== id)
       );
+
+      if (editingInterviewId === id) {
+        cancelEditing();
+      }
     } catch (error) {
       console.error("Error deleting interview:", error);
       setError("Failed to delete interview.");
@@ -123,7 +147,9 @@ function Interviews() {
 
       <div className="dashboard-grid">
         <div className="card">
-          <h2 className="section-title">Add Interview</h2>
+          <h2 className="section-title">
+            {editingInterviewId ? "Edit Interview" : "Add Interview"}
+          </h2>
 
           {error && (
             <div
@@ -229,8 +255,18 @@ function Interviews() {
               </div>
 
               <div className="form-actions">
+                {editingInterviewId && (
+                  <button
+                    type="button"
+                    className="secondary-button"
+                    onClick={cancelEditing}
+                  >
+                    Cancel Edit
+                  </button>
+                )}
+
                 <button type="submit" className="primary-button">
-                  Save Interview
+                  {editingInterviewId ? "Update Interview" : "Save Interview"}
                 </button>
               </div>
             </form>
@@ -251,6 +287,7 @@ function Interviews() {
                   <th>Date</th>
                   <th>Time</th>
                   <th>Status</th>
+                  <th>Notes</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -263,7 +300,20 @@ function Interviews() {
                     <td>{interview.interview_date}</td>
                     <td>{interview.interview_time || "—"}</td>
                     <td>{interview.interview_status}</td>
+                    <td style={{ maxWidth: 220 }}>
+                      {interview.notes
+                        ? interview.notes.length > 60
+                          ? `${interview.notes.slice(0, 60)}...`
+                          : interview.notes
+                        : "—"}
+                    </td>
                     <td>
+                      <button
+                        className="secondary-button"
+                        onClick={() => startEditing(interview)}
+                      >
+                        Edit
+                      </button>{" "}
                       <button
                         className="danger-button"
                         onClick={() => deleteInterview(interview.id)}
