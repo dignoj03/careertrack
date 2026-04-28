@@ -1,16 +1,60 @@
-# React + Vite
+# CareerTrack — Full-Stack Job Application Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CareerTrack is a full-stack job application tracking platform built with React, FastAPI, and SQLite. It helps users manage job applications, interview schedules, follow-ups, and application outcomes from a clean dashboard interface.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Dashboard with application statistics
+- Add, edit, delete, search, filter, and sort job applications
+- Track application statuses such as Saved, Applied, Online Assessment, Interview, Offer, and Rejected
+- Store job posting links, salary range, contact person, notes, and follow-up dates
+- Interview tracker linked to job applications
+- Upcoming interviews displayed on the dashboard
+- REST API built with FastAPI
+- SQLite database persistence
+- Modern React SaaS-style user interface
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Tech Stack
 
-## Expanding the ESLint configuration
+### Frontend
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React
+- Vite
+- React Router
+- Axios
+- Recharts
+- Lucide React
+- CSS
+
+### Backend
+
+- Python
+- FastAPI
+- SQLAlchemy
+- SQLite
+- Uvicorn
+- Pydantic
+
+## Project Structure
+
+```text
+careertrack/
+  backend/
+    main.py
+    database.py
+    models.py
+    schemas.py
+    routes/
+      applications.py
+      dashboard.py
+      interviews.py
+  frontend/
+    src/
+      components/
+      pages/
+      services/
+      App.jsx
+      main.jsx
+      index.css
+  README.md
