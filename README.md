@@ -58,3 +58,26 @@ careertrack/
       main.jsx
       index.css
   README.md
+
+
+  ## Screenshots
+
+### Dashboard
+
+![Dashboard](screenshots/Dashboard.png)
+
+### Applications Page
+
+![Applications Page](screenshots/Applications.png)
+
+### Add Application Form
+
+![Add Application Form](screenshots/Add application.png)
+
+### Interviews Page
+
+![Interviews Page](screenshots/Interviews.png)
+
+### API Documentation
+
+![API Documentation](screenshots/api-docs.png)
