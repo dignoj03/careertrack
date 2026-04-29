@@ -140,7 +140,7 @@ function ApplicationForm() {
                 name="company"
                 value={formData.company}
                 onChange={handleChange}
-                placeholder="Example: OpenAI"
+                placeholder="Example: Google"
               />
             </div>
 
