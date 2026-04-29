@@ -1,10 +1,19 @@
 import { NavLink, Route, Routes } from "react-router-dom";
-import { BarChart3, BriefcaseBusiness, CalendarDays, LayoutDashboard } from "lucide-react";
+import {
+  BarChart3,
+  BriefcaseBusiness,
+  CalendarDays,
+  Clock3,
+  LayoutDashboard,
+} from "lucide-react";
+
+
 
 import Dashboard from "./pages/Dashboard";
 import Applications from "./pages/Applications";
 import ApplicationForm from "./pages/ApplicationForm";
 import Interviews from "./pages/Interviews";
+import FollowUps from "./pages/FollowUps";
 
 function App() {
   return (
@@ -30,6 +39,11 @@ function App() {
             <BarChart3 size={19} />
             Add Application
           </NavLink>
+          
+          <NavLink to="/follow-ups" className="nav-link">
+            <Clock3 size={19} />
+            Follow-Ups
+          </NavLink>
 
           <NavLink to="/interviews" className="nav-link">
             <CalendarDays size={19} />
@@ -52,6 +66,7 @@ function App() {
           <Route path="/add-application" element={<ApplicationForm />} />
           <Route path="/interviews" element={<Interviews />} />
           <Route path="/edit-application/:id" element={<ApplicationForm />} />
+          <Route path="/follow-ups" element={<FollowUps />} />
         </Routes>
       </main>
     </div>
